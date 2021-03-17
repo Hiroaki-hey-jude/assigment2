@@ -1,99 +1,117 @@
-package assignment.cardgame;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
+import java.util.*;
 public class Player {
-	
-	private int points;
-	private String result;
 	private String playerName;
-	private List<Card> hand;
-	
-	private Card[] cards = new Card[13];
-	
-	Scanner in = new Scanner(System.in);
-	
+	private int score;
+	private int point;
+	private ArrayList<Cards> hand;
+	private Map<Cards, Integer> fullInfoCards = new HashMap<>();
+	//private Map<Stack<Cards>, Integer> fullInfoCards = new HashMap<>();
 
 	public Player() {
-		
+
 	}
-	
-	public Player(String name) {
+
+	public Player(String name){
 		this.playerName = name;
-		this.points = 0;
+		this.score = 0;
+		this.point = 0;
 		this.hand = new ArrayList<>();
+		this.fullInfoCards = new HashMap<>();
 	}
 
-	public int getPoints() {
-		return points;
-	}
-
-	public void setPoints(int points) {
-		this.points = points;
-	}
-	
-	public String getResult() {
-		return result;
-	}
-
-	public void setResult(String result) {
-		this.result = result;
-	}
-
-	public String getPlayerName() {
+	public String getName(){
 		return playerName;
 	}
 
-	public void setPlayerName(String playerName) {
-		this.playerName = playerName;
+	public void setName(String name){
+		this.playerName = name;
 	}
 
-	@Override
-	public String toString() {
-		return playerName;
+	public int getScore(){
+		return score;
 	}
-	
-	 void receiveCard(Card card, int position){
-	        cards[position] = card;
-	    }
-	 
-	 public void setHand(List<Card> hand) {
-	        this.hand = hand;
-//	        System.out.println(hand);
-	    }
-	 
-	 public List<Card> getHand() {
+
+	public void setScore(int score){
+		this.score = score;
+	}
+
+	public int getPoint()
+	{
+		return point;
+	}
+
+	public void setPoint(int point)
+	{
+		this.point = point;
+	}
+
+	public void setHand(ArrayList<Cards> hand) {
+		this.hand = hand;
+	}
+
+	public List<Cards> getHand() {
 		return hand;
 	}
 
-	public void showHand(){
-	        for(int i=0; i<this.hand.size(); i++){
-	            System.out.print(this.hand.get(i)+" ");
-	            if(i==4 || i==9 || i==14) {
-	            	System.out.print(", ");
-	            }
-	        }
-	 }
-	 
-	 public void ShowPlayerCards(){
-	        System.out.println("---------------------------------------------");
-	        for (Card card : cards){
-	            if(card!=null)
-	                System.out.println(card.point + "  of  " + card.suit);
-	        }
-	        System.out.println("---------------------------------------------");
-	    }
 
-	/*
-	void inputPlayName() {
-		ArrayList<String> pName = new ArrayList<>();
-		for(int i=1;i<4;i++) {
-			System.out.println("Enter player "+i+" name : ");
-			playerName = in.nextLine();
-			pName.add(playerName);
+	public Map<Cards, Integer> getFullInfoCards() {
+		return fullInfoCards;
+	}
+
+	public void setFullInfoCards(ArrayList<Cards> hand) {
+		this.fullInfoCards = fullInfoCards;
+	}
+
+
+	public void pointOfEachCards(Stack<Cards> deck)
+	{
+		for(int i = 0; i < deck.size(); i++)
+		{
+			if(deck.get(i).getFace() == "A")
+				fullInfoCards.put(deck.get(i), 1);
+			else if(deck.get(i).getFace() == "2")
+				fullInfoCards.put(deck.get(i), 2);
+			else if(deck.get(i).getFace() == "3")
+				fullInfoCards.put(deck.get(i), 3);
+			else if(deck.get(i).getFace() == "4")
+				fullInfoCards.put(deck.get(i), 4);
+			else if(deck.get(i).getFace() == "5")
+				fullInfoCards.put(deck.get(i), 5);
+			else if(deck.get(i).getFace() == "6")
+				fullInfoCards.put(deck.get(i), 6);
+			else if(deck.get(i).getFace() == "7")
+				fullInfoCards.put(deck.get(i), 7);
+			else if(deck.get(i).getFace() == "8")
+				fullInfoCards.put(deck.get(i), 8);
+			else if(deck.get(i).getFace() == "9")
+				fullInfoCards.put(deck.get(i), 9);
+			else if(deck.get(i).getFace() == "X")
+				fullInfoCards.put(deck.get(i), 10);
+			else if(deck.get(i).getFace() == "J")
+				fullInfoCards.put(deck.get(i), 10);
+			else if(deck.get(i).getFace() == "Q")
+				fullInfoCards.put(deck.get(i), 10);
+			else if(deck.get(i).getFace() == "K")
+				fullInfoCards.put(deck.get(i), 10);
+
+
+
+
 		}
 	}
-*/
+
+}
+class sortByFace implements Comparator<Cards> {
+
+	@Override
+	public int compare(Cards o1, Cards o2) {
+		return o1.getSuit().compareTo(o2.getSuit());
+	}
+}
+class sortBySuits implements Comparator<Cards>{
+	public int compare (Cards a, Cards b)
+	{
+		return a.getSuitValue() - b.getSuitValue();
+	}
 }
